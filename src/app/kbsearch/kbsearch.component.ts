@@ -12,16 +12,20 @@ export class KbsearchComponent implements OnInit {
   constructor(private http: Http) { }
   kbList = {};
   showKbList = false;
+  spinner = false;
   ngOnInit() {
-    let url = 'http://localhost:4200/images/kbList.json';
-    this.http.get(url).subscribe(res => this.kbList = res.json());
-  }
-  onKey(event: any) { 
 
-    if (event.target.value.length) {
+  }
+  onKey(event: any) {
+    this.spinner = true;
+    if (event.target.value.length > 2) {
+      let url = 'http://localhost:4200/images/kbList.json';
+      this.http.get(url).subscribe(res => this.kbList = res.json());
       this.showKbList = true;
-    }else{
+      this.spinner = false;
+    } else {
       this.showKbList = false;
+      this.spinner = false;
     }
   }
 }
